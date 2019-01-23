@@ -1,0 +1,10 @@
+.jumbotron {
+	text-align: center;
+	color: white;
+	text-shadow: 1px 0px #3a3a3a, 0px 1px #3a3a3a, 0px -1px #3a3a3a, -1px 0px #3a3a3a;
+	background-image: asset-url("photos.jpg");
+	background-size: cover;
+}
+.jumbotron p {
+	font-weight: normal;
+}
