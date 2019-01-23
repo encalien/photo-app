@@ -51,4 +51,18 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.read_encrypted_secrets = true
+
+  ActionMailer::Base.smtp_settings = {
+    :address => 'smtp.sendgrid.net',
+    :port => '587',
+    :authentication => :plain,
+    :user_name => Rails.application.secrets.sendgrid[:user_name],
+    :password => Rails.application.secrets.sendgrid[:password],
+    :domain => 'heroku.com',
+    :enable_starttls_auto => true
+  }
+  config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end
