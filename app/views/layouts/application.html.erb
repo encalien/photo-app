@@ -25,13 +25,22 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">PhotoApp</a>
+        <%= link_to "PhotoApp", root_path, class: "navbar-brand" %>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Link1", "/path1"  %></li>
+            <li><%= link_to "My Profile", root_path %></li>
             <li><%= link_to "Link2", "/path2"  %></li>
             <li><%= link_to "Link3", "/path3"  %></li>
           </ul>
+          <div class="form-inline pull-right">
+          <% if current_user %>
+            <span class="navbar-text small font-italic" style="vertical-align: center">Signed in as <%= current_user.email %></span>
+            <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "btn btn-default navbar-btn" %>
+          <% else %>
+            <%= link_to "Log In", new_user_session_path, class: "btn btn-primary navbar-btn" %>
+            <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-success navbar-btn" %>
+          <% end %>
+        </div>
         </div>
       </div>
     </div>
@@ -42,17 +51,6 @@
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
-        <div class="col-lg-3">
-          <div class="well sidebar-nav">
-            <h3>Sidebar</h3>
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
       </div><!--/row-->
 
       <footer>
