@@ -1,11 +1,32 @@
+<script language="Javascript">
+  Strip.setPublishableKey("<%= ENV['STRIPE_TEST_PUBLISHABLE_KEY'] %>");
+</script>
+
 <h1><%= t('.sign_up') %></h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "cc_form" }) do |f| %>
   <%= bootstrap_devise_error_messages! %>
+
+  <!-- REGISTRATION FORM -->
+  <div class="form-group row">
+    <div class="col-sm-6">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, autofocus: true, autocomplete: 'first name', class: 'form-control' %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, autocomplete: 'last name', class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :username %>
+    <%= f.text_field :username, autocomplete: 'username', class: 'form-control' %>
+  </div>
 
   <div class="form-group">
     <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
+    <%= f.email_field :email, autocomplete: 'email', class: 'form-control' %>
   </div>
 
   <div class="form-group">
@@ -21,6 +42,50 @@
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
   </div>
+
+  <div class="spacer-md">
+  <hr class="divider">
+  <div class="spacer-sm">
+  <h3>Payment information</h3>
+
+  <!-- PAYMENT FORM -->
+  <%= fields_for(:payment) do |f| %>
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name, autofocus: true, autocomplete: 'first name', class: 'form-control' %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name, autocomplete: 'last name', class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <%= f.label :card_number, data: { stripe: "label" } %>
+        <%= f.text_field :card_number, autocomplete: 'first name', data: { stripe: "number" }, class: 'form-control' %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :card_cvv, "Card CVC", data: { stripe: "label" } %>
+        <%= f.text_field :card_cvv, autocomplete: 'first name', data: { stripe: "cvc" }, class: 'form-control' %>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12">
+          <%= f.label :card_expires, data: { stripe: "label" } %>
+        </div>
+        <div class="col-sm-6">
+          <%= f.select :card_expires_month, options_for_select(Payment.month_options), { include_blank: "Month" }, data: { stripe: "exp-month" }, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6">
+          <%= f.select :card_expires_year, options_for_select(Payment.year_options), { include_blank: "Year" }, data: { stripe: "exp-year" }, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+
+  <% end %>
+
 
   <div class="form-group">
     <%= f.submit t('.sign_up'), class: 'btn btn-primary' %>
