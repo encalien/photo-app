@@ -1,8 +1,15 @@
 <script language="Javascript">
-  Strip.setPublishableKey("<%= ENV['STRIPE_TEST_PUBLISHABLE_KEY'] %>");
+  Stripe.setPublishableKey("<%= ENV['STRIPE_TEST_PUBLISHABLE_KEY'] %>");
 </script>
 
-<h1><%= t('.sign_up') %></h1>
+<h1 class="text-center"><%= t('.sign_up') %></h1>
+<div class="spacer-sm"></div>
+<hr>
+<div class="spacer-sm"></div>
+<h3>Account information</h3>
+<div class="spacer-sm"></div>
+
+
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "cc_form" }) do |f| %>
   <%= bootstrap_devise_error_messages! %>
@@ -43,24 +50,15 @@
     <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
   </div>
 
-  <div class="spacer-md">
+  <div class="spacer-md"></div>
   <hr class="divider">
-  <div class="spacer-sm">
+  <div class="spacer-sm"></div>
   <h3>Payment information</h3>
+  <div class="spacer-sm"></div>
+
 
   <!-- PAYMENT FORM -->
   <%= fields_for(:payment) do |f| %>
-    <div class="form-group row">
-      <div class="col-sm-6">
-        <%= f.label :first_name %>
-        <%= f.text_field :first_name, autofocus: true, autocomplete: 'first name', class: 'form-control' %>
-      </div>
-      <div class="col-sm-6">
-        <%= f.label :last_name %>
-        <%= f.text_field :last_name, autocomplete: 'last name', class: 'form-control' %>
-      </div>
-    </div>
-
     <div class="form-group row">
       <div class="col-sm-6">
         <%= f.label :card_number, data: { stripe: "label" } %>
